@@ -85,7 +85,7 @@ const HomePage = () => {
         setDataToLocalStorage(notes)
         console.log('Set to Local Storage')
       }
-    }, 1500)
+    }, 800)
 
     return () => clearTimeout(handler)
   }, [notes])
@@ -287,7 +287,7 @@ const HomePage = () => {
                       }}
                       className="flex flex-col gap-2 items-center justify-center text-primary-100"
                     >
-                      <p className="font-semibold">Colored </p>
+                      <p className="font-semibold">Classic </p>
                       <div className="w-[8rem] h-[8rem]">
                         <ColoredStickie
                           noteData={{
@@ -328,6 +328,7 @@ const HomePage = () => {
             )
           })}
         </div>
+        {/* <div className="h-[20rem] w-[20rem] border border-white rounded-br-3xl">Aniket Jain</div> */}
       </main>
 
       {popup?.isOpen && (
@@ -359,11 +360,21 @@ const HomePage = () => {
             <div className="login-box">
               <p className="text-center text-primary-200">Add Tag to Card</p>
               <div className="user-box pt-2">
-                <input type="text" autoFocus value={tag} onChange={(e: any) => setTag(e.target.value)} />
+                <input
+                  type="text"
+                  autoFocus
+                  value={tag}
+                  onChange={(e: any) => setTag(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddTag()
+                    }
+                  }}
+                />
               </div>
               <center>
                 <button className="login-boxBtn" onClick={handleAddTag}>
-                  SEND
+                  Save
                   <span className="buttonSpan"></span>
                 </button>
               </center>

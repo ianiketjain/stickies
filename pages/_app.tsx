@@ -3,6 +3,11 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  // useEffect(() => {
+  //   document.body.style.margin = '0px' // Remove margins for full-screen UI
+  //   document.body.style.height = '100vh'
+  // }, [])
+
   return (
     <>
       <Head>

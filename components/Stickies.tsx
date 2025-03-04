@@ -141,7 +141,7 @@ export const ColoredStickie: React.FC<{
               }}
             />
             {isOptionsVisible && (
-              <div className="flex items-center gap-2 pl-2">
+              <div className="flex items-center gap-1 pl-2">
                 <button
                   ref={colorRef}
                   onClick={() => {
@@ -149,10 +149,10 @@ export const ColoredStickie: React.FC<{
                   }}
                   className="border-2 rounded-full"
                 >
-                  <CircleIcon width="1.3rem" color={myNote?.color?.id} />
+                  <CircleIcon width="0.8rem" color={myNote?.color?.id} />
                 </button>
                 <span ref={cardRef} className="block cursor-pointer" onClick={() => setIsSettingOpen(!isSettingOpen)}>
-                  <SettingIcon />
+                  <SettingIcon size="0.8rem" />
                 </span>
               </div>
             )}

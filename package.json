@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "reboot": "rm -rf .next && rm -rf node_modules && rm package-lock.json && npm i",
-    "restart": "rm -rf .next && rm -rf node_modules && npm i && next dev"
+    "restart": "rm -rf .next && rm -rf node_modules && npm i && next dev",
+    "cbuild": "npm run build &&  mv build/_next build/next && sed -i '' 's/_next/next/g' build/index.html"
   },
   "dependencies": {
     "next": "^14.2.24",

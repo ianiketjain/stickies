@@ -1,10 +1,16 @@
-# Nextjs Setup
+# Stickies
 
 # Steps to run on local
 
 1. npm i
 2. npm run start
 3. for running on local system must have Node v18
+
+
+# Steps to run on local docker 
+1. docker build -t stickies .
+2. docker run -p 4000:3000 stickies
+3. go to URL http://localhost:4000/
 
 <!-- Color Pallate -->
 <!-- https://htmlcolorcodes.com/ -->
@@ -15,7 +21,3 @@
 <!-- Keyboard - Italic &  Bold & underline & strikethrough & Highlight & uppercase & Lowercase -->
 <!-- Mouse - CheckBox , Ordered List , Unordered List -->
 <!-- Multiple types of stickies UI -->
-
-
-<!-- Save this data before Leaving -->
-<!-- on Enter Add the tag and rename send to save  -->
