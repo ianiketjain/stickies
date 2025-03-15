@@ -1,8 +1,14 @@
-export const Logo = () => {
+export const Logo = ({ color }: any) => {
   return (
     <div className="loader">
       <div className="scanner">
-        <span>Stickies...</span>
+        <span
+          style={{
+            color: color,
+          }}
+        >
+          Stickies...
+        </span>
       </div>
     </div>
   )

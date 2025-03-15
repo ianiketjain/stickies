@@ -15,6 +15,7 @@ import { getDataFromLocalStorage, getThemeFromLocalStorage, setDataToLocalStorag
 const HomePage = () => {
   const sizeRef: any = useRef(null)
   const colorRef: any = useRef(null)
+  const isInitialRender = useRef(true)
   const fontfamilyRef: any = useRef(null)
   const [tag, setTag] = useState('')
   const [search, setSearch] = useState('')
@@ -64,28 +65,35 @@ const HomePage = () => {
   }, [isOpen, isFontFamilyOpen, isColorOpen])
 
   useEffect(() => {
-    let notesData = getDataFromLocalStorage()
-    if (!Array.isArray(notesData) || notesData.length === 0) {
-      notesData = stickies
+    const asyncFunc = async () => {
+      let notesData = getDataFromLocalStorage()
+      if (!Array.isArray(notesData) || notesData.length === 0) {
+        notesData = stickies
+      }
+
+      let myNotes = notesData?.map((sticky: any) => {
+        return { ...sticky, found: false }
+      })
+
+      setNotes(myNotes)
+      setConstData(myNotes)
+
+      let mytheme = getThemeFromLocalStorage()
+      setTheme(mytheme)
     }
-
-    setNotes(notesData)
-    setConstData(notesData)
-
-    let mytheme = getThemeFromLocalStorage()
-    setTheme(mytheme)
+    asyncFunc()
   }, [])
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      let newData = JSON.stringify(notes)
-      let oldData = JSON.stringify(constData)
+    let newData = JSON.stringify(notes)
+    let oldData = JSON.stringify(constData)
 
+    const handler = setTimeout(() => {
       if (newData !== oldData) {
-        setDataToLocalStorage(notes)
+        notes?.length > 0 && setDataToLocalStorage(notes)
         console.log('Set to Local Storage')
       }
-    }, 800)
+    }, 500)
 
     return () => clearTimeout(handler)
   }, [notes])
@@ -145,18 +153,34 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    let filter = filterStickies()
-    search !== '' && setNotes(filter)
-  }, [search])
+    if (isInitialRender.current) {
+      isInitialRender.current = false
+      return
+    }
 
-  // console.log(notes)
+    if (search === '') {
+      setNotes(
+        notes?.map((sticky: any) => {
+          return { ...sticky, found: false }
+        })
+      )
+    } else {
+      const filter = filterStickies()
+      setNotes(filter)
+    }
+  }, [search])
 
   return (
     <>
       <HeadTag />
-      <main className={`w-full h-screen bg-gradient theme-${theme?.color}`}>
+      <main
+        className={`w-full h-screen theme-${theme?.color}`}
+        style={{
+          backgroundImage: `url(${'/bgimg.jpg'})`,
+        }}
+      >
         <nav className="p-4 flex items-center justify-between">
-          <Logo />
+          <Logo color={theme.id} />
           <div className="flex items-center gap-6 text-base">
             {!toggleSearch && (
               <SearchIcon
@@ -221,7 +245,7 @@ const HomePage = () => {
               )}
             </div>
 
-            <div className="relative font-bold text-primary-900" ref={sizeRef}>
+            <div className="relative font-bold text-primary-500" ref={sizeRef}>
               <button
                 className="flex items-center gap-2"
                 onClick={() => {
@@ -244,7 +268,7 @@ const HomePage = () => {
                 />
               )}
             </div>
-            <div className="relative font-bold text-primary-900" ref={fontfamilyRef}>
+            <div className="relative font-bold text-primary-500" ref={fontfamilyRef}>
               <button className="flex items-center gap-2" onClick={() => setIsFontFamilyOpen(!isFontFamilyOpen)}>
                 {fontFamily}
               </button>
@@ -311,7 +335,7 @@ const HomePage = () => {
 
         <div className="pl-10 flex gap-6 mt-10">
           {notes?.map((note: any, i: number) => {
-            if (note?.found) return <></>
+            if (note?.found) return <div key={i}></div>
 
             return (
               <DragtheStickie myPosition={note?.position} handleChangeStickie={handleChangeStickie} key={i}>
@@ -328,7 +352,7 @@ const HomePage = () => {
             )
           })}
         </div>
-        {/* <div className="h-[20rem] w-[20rem] border border-white rounded-br-3xl">Aniket Jain</div> */}
+        {/* <div className="h-[20rem] w-[20rem] border border-white rounded-br-3xl">Aniket</div> */}
       </main>
 
       {popup?.isOpen && (

@@ -9,13 +9,13 @@
 .scanner span::before {
   content: 'Stickies';
   position: absolute;
-  top: 0;
+  top: 3px;
   left: 0;
   width: 0;
   height: 75%;
   border-right: 4px solid black;
   overflow: hidden;
-  color: black;
+  /* color: black; */
   animation: load91371 2s linear infinite;
 }
 

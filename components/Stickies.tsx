@@ -37,10 +37,6 @@ export const ColoredStickie: React.FC<{
   } = props
 
   const [myNote, setMyNote] = useState(noteData)
-  useEffect(() => {
-    setMyNote(noteData)
-  }, [noteData])
-
   const divRef = useRef(null)
   const cardRef: any = useRef(null)
   const colorRef: any = useRef(null)
@@ -51,6 +47,10 @@ export const ColoredStickie: React.FC<{
   const [toggleColor, setToggleColor] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [isReload, setIsReload] = useState(false)
+
+  useEffect(() => {
+    setMyNote(noteData)
+  }, [notes, noteData, isReload])
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -82,7 +82,7 @@ export const ColoredStickie: React.FC<{
       let updatedNotes = [...prevNotes]
 
       if (type === 'delete') {
-        updatedNotes = updatedNotes.filter((upD) => upD?.id !== currentFocus?.note?.id)
+        updatedNotes.splice(myData, 1)
         setIsReload(true)
       } else if (type === 'remove-tag') {
         updatedNotes[i] = {
@@ -151,7 +151,13 @@ export const ColoredStickie: React.FC<{
                 >
                   <CircleIcon width="0.8rem" color={myNote?.color?.id} />
                 </button>
-                <span ref={cardRef} className="block cursor-pointer" onClick={() => setIsSettingOpen(!isSettingOpen)}>
+                <span
+                  ref={cardRef}
+                  className="block cursor-pointer"
+                  onClick={() => {
+                    setIsSettingOpen(!isSettingOpen)
+                  }}
+                >
                   <SettingIcon size="0.8rem" />
                 </span>
               </div>
@@ -209,7 +215,7 @@ export const ColoredStickie: React.FC<{
                 setReadOnly(false)
               }
               if (type === 'Delete') {
-                handleChangeStickie('delete')
+                handleChangeStickie('delete', index)
               }
               setIsSettingOpen(false)
               handleOpenDropdown(type)

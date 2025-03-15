@@ -18,7 +18,8 @@ const Editor = ({
 
   useEffect(() => {
     if (editorRef.current && editorRef.current.innerHTML === '') editorRef.current.innerHTML = content
-    if (editorRef.current && isReload) editorRef.current.innerHTML = content
+    if (editorRef.current && editorRef.current.innerHTML !== '' && (editorRef.current.innerHTML !== content || isReload))
+      editorRef.current.innerHTML = content
 
     setTimeout(() => {
       setIsReload(false)

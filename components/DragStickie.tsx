@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const DragtheStickie = ({
   handleChangeStickie,
@@ -13,6 +13,10 @@ const DragtheStickie = ({
   const [isDragging, setIsDragging] = useState(false)
   const [position, setPosition] = useState(myPosition)
   const [offset, setOffset] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    setPosition(myPosition)
+  }, [myPosition])
 
   const handleMouseUp = () => {
     setIsDragging(false)
