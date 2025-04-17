@@ -17,6 +17,7 @@ const HomePage = () => {
   const colorRef: any = useRef(null)
   const isInitialRender = useRef(true)
   const fontfamilyRef: any = useRef(null)
+
   const [tag, setTag] = useState('')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState(false)
@@ -29,7 +30,7 @@ const HomePage = () => {
   const [popup, setPopup] = useState<any>({ isOpen: false })
   const [currentFocus, setCurrentFocus] = useState<any>({ i: -1 })
   const [isFontFamilyOpen, setIsFontFamilyOpen] = useState(false)
-  const [theme, setTheme] = useState<{ color: string; id: string }>(themes[0])
+  const [theme, setTheme] = useState<{ color: string; id: string }>(themes[6])
   const [constData, setConstData] = useState([])
 
   let newStickies = {
@@ -311,7 +312,7 @@ const HomePage = () => {
                       }}
                       className="flex flex-col gap-2 items-center justify-center text-primary-100"
                     >
-                      <p className="font-semibold">Classic </p>
+                      <p className="font-semibold">Classic</p>
                       <div className="w-[8rem] h-[8rem]">
                         <ColoredStickie
                           noteData={{
@@ -323,6 +324,36 @@ const HomePage = () => {
                           width={128}
                           height={128}
                           isOptionsVisible={false}
+                        />
+                      </div>
+                    </div>
+                    <div
+                      onClick={() => {
+                        setNotes((prevNotes: any) => [
+                          ...prevNotes,
+                          {
+                            ...newStickies,
+                            type: 'simple',
+                            tags: [],
+                          },
+                        ])
+                        setAddStickie(false)
+                      }}
+                      className="flex flex-col gap-2 items-center justify-center text-primary-100"
+                    >
+                      <p className="font-semibold">Simple</p>
+                      <div className="w-[8rem] h-[8rem]">
+                        <ColoredStickie
+                          noteData={{
+                            content: 'This is Stckie',
+                            tags: ['Bagpack'],
+                            heading: '',
+                            color: { name: 'pink', id: '#D81B60', medium: '#C2185B', dark: '#880E4F', text: '#ffffff' },
+                          }}
+                          width={128}
+                          height={128}
+                          isOptionsVisible={false}
+                          isTagVisible={false}
                         />
                       </div>
                     </div>
@@ -347,12 +378,13 @@ const HomePage = () => {
                   setCurrentFocus={setCurrentFocus}
                   handleOpenDropdown={handleOpenDropdown}
                   noteData={note}
+                  isTagVisible={note?.type === 'simple' ? false : true}
+                  isHeadingVisible={note?.type === 'simple' ? false : true}
                 />
               </DragtheStickie>
             )
           })}
         </div>
-        {/* <div className="h-[20rem] w-[20rem] border border-white rounded-br-3xl">Aniket</div> */}
       </main>
 
       {popup?.isOpen && (

@@ -20,4 +20,3 @@
 <!-- Encrypt Decrypt Stickies -->
 <!-- Keyboard - Italic &  Bold & underline & strikethrough & Highlight & uppercase & Lowercase -->
 <!-- Mouse - CheckBox , Ordered List , Unordered List -->
-<!-- Multiple types of stickies UI -->

@@ -12,6 +12,8 @@ export const ColoredStickie: React.FC<{
   noteData?: any
   handleOpenDropdown?: any
   isOptionsVisible?: boolean
+  isTagVisible?: boolean
+  isHeadingVisible?: boolean
   currentFocus?: any
   setCurrentFocus?: any
   setNotes?: any
@@ -34,6 +36,8 @@ export const ColoredStickie: React.FC<{
     height = 350,
     width = 350,
     isOptionsVisible = true,
+    isTagVisible = true,
+    isHeadingVisible = true,
   } = props
 
   const [myNote, setMyNote] = useState(noteData)
@@ -129,19 +133,22 @@ export const ColoredStickie: React.FC<{
           onMouseDown={onMouseDown}
         >
           <div className="flex justify-between px-4 pt-2">
-            <input
-              type={'text'}
-              className={`text-xl text-ellipsis whitespace-nowrap overflow-hidden font-bold w-full bg-inherit outline-none 
+            {isHeadingVisible && (
+              <input
+                type={'text'}
+                className={`text-xl text-ellipsis whitespace-nowrap overflow-hidden font-bold w-full bg-inherit outline-none 
                 ${readOnly && 'cursor-auto'}`}
-              readOnly={readOnly}
-              defaultValue={myNote?.heading}
-              onChange={(e: any) => handleChangeStickie('heading', e.target.value)}
-              onBlur={(e: any) => {
-                setReadOnly(true)
-              }}
-            />
+                readOnly={readOnly}
+                defaultValue={myNote?.heading}
+                onChange={(e: any) => handleChangeStickie('heading', e.target.value)}
+                onBlur={(e: any) => {
+                  setReadOnly(true)
+                }}
+              />
+            )}
+
             {isOptionsVisible && (
-              <div className="flex items-center gap-1 pl-2">
+              <div className="flex items-center gap-1 pl-2 absolute right-3">
                 <button
                   ref={colorRef}
                   onClick={() => {
@@ -163,8 +170,9 @@ export const ColoredStickie: React.FC<{
               </div>
             )}
           </div>
+
           <div
-            className="break-words px-4 pt-4 overflow-scroll scrollbar-hide  text-base"
+            className={`break-words px-4 overflow-scroll scrollbar-hide text-base ${isTagVisible ? 'pt-4' : ''}`}
             style={{ height: 'auto' }}
             onMouseDown={(e) => {
               setCurrentFocus && setCurrentFocus({ i: index, note: noteData })
@@ -183,14 +191,17 @@ export const ColoredStickie: React.FC<{
               handleChangeStickie={handleChangeStickie}
               width={dimensions?.width}
               height={dimensions?.height}
+              isSimpleStickie={isTagVisible}
             />
           </div>
         </div>
-        {myNote?.tags?.length > 0 && (
+
+        {isTagVisible && myNote?.tags?.length > 0 && (
           <div className="absolute bottom-0 w-full h-[3rem] flex items-center gap-2 p-1">
             <Tags tagsArray={myNote?.tags} myColor={myNote?.color} handleChangeStickie={handleChangeStickie} />
           </div>
         )}
+
         {toggleColor && (
           <DropdownBox
             array={stickieColor}
@@ -199,6 +210,7 @@ export const ColoredStickie: React.FC<{
             onClick={(col: any) => handleChangeStickie('color', col)}
           />
         )}
+
         {isSettingOpen && (
           <DropdownBox
             array={['Edit Heading', 'Full screen', 'Add Tags', 'Delete', 'Info']}

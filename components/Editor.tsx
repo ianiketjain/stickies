@@ -13,6 +13,7 @@ const Editor = ({
   fontSize,
   fontFamily,
   isReadonly = false,
+  isSimpleStickie,
 }: any) => {
   const editorRef: any = useRef(null)
 
@@ -127,13 +128,13 @@ const Editor = ({
     <div
       ref={editorRef}
       contentEditable={!isReadonly}
-      className="cursor-text rounded focus:outline-none overflow-scroll scrollbar-hide "
+      className="cursor-text rounded focus:outline-none overflow-scroll scrollbar-hide"
       onInput={saveContent}
       style={{
         fontSize: fontSize,
         fontFamily: fontFamily,
         width: width - 30,
-        height: tags?.length > 0 ? height - 95 : height - 60,
+        height: tags?.length > 0 ? height - 95 : !isSimpleStickie ? height - 20 : height - 60,
         whiteSpace: 'pre-wrap',
       }}
     ></div>

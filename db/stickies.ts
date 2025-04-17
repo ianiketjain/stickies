@@ -17,5 +17,5 @@ export const setThemeToLocalStorage = (theme: any) => {
 
 export const getThemeFromLocalStorage = () => {
   const themeData = getLocalStorageData(localStorageData.THEME)
-  return themeData ? JSON.parse(themeData) : { color: 'brown', id: '#795548' }
+  return themeData ? JSON.parse(themeData) : { color: 'yellow', id: '#FFEB3B' }
 }

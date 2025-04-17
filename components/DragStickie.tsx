@@ -49,7 +49,7 @@ const DragtheStickie = ({
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      {/* ✅ Attach handleMouseDown to the child and catch from there */}
+      {/* Attach handleMouseDown to the child and catch from there */}
       {React.cloneElement(children, { onMouseDown: handleMouseDown, setPosition: setPosition })}
     </div>
   )
